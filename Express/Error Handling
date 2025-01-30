@@ -1,0 +1,28 @@
+const express = require('express')
+const app = express();
+
+app.use(function(req, res, next){
+    console.log("Middleware chala");
+    next();
+})
+ 
+
+app.get('/', (req, res) => {
+  res.send("Ye wala default hai");
+})
+
+// Assume kiya ki is route me kuch error hai, to return next statement yha likhenge ki 
+// if we encounter any error, to "Something broke" msg jyega frontend pr and "Something went wrong" jyega console pr
+app.get('/profile', (req, res) => {
+    return next(new Error("Something went wrong"))
+  })
+
+
+// Error handling
+app.use((err, req, res, next) =>{
+    console.error(err.stack)
+    res.status(500).send("Something broke");
+})
+
+
+app.listen(3000);
