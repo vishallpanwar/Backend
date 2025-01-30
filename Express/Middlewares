@@ -1,0 +1,25 @@
+const express = require('express')
+const app = express();
+
+// Middleware : Jb bhi server req accept krta hai, to routes se phuchne se phle agr hmko kuch kaam krwana hai to wo iske through hi hoga
+// Sbse phle express me yagi chlega and then uske baad baki saare routes chalenge
+// We can have multiplemiddlewares
+// next() ki wjh se wo agle middleware pr jyega,ad then middlewares ke baad routes pr
+
+app.use(function(req, res, next){
+    console.log("Middleware chala");
+    next();
+})
+ 
+
+app.get('/', (req, res) => {
+  res.send("Ye wala default hai");
+})
+
+
+app.get('/profile', (req, res) => {
+    res.send("Ye wali profile hai");
+  })
+
+
+app.listen(3000);
