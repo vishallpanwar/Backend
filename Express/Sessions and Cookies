@@ -1,0 +1,29 @@
+const express = require('express')
+const app = express();
+
+app.use(express.json()); // isse browser ko json data pdne me help hoga
+app.use(express.urlencoded({extended : true})); // isse browser ko www.wla data pdne me help hoga
+
+app.use(function(req, res, next){
+    console.log("Middleware chala");
+    next();
+})
+ 
+
+app.get('/', (req, res) => {
+  res.send("Ye wala default hai");
+})
+
+
+app.get('/profile', (req, res) => {
+    return next(new Error("Something went wrong"))
+  })
+
+
+app.use((err, req, res, next) =>{
+    console.error(err.stack)
+    res.status(500).send("Something broke");
+})
+
+
+app.listen(3000);
